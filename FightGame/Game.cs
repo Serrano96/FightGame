@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FightGame
@@ -10,6 +11,7 @@ namespace FightGame
         public const int DefaultPower = 10;
 
         public List<Player> Players { get; set; }
+        private int _lastId = 0;
 
         private Random _random = new Random();
 
@@ -25,28 +27,32 @@ namespace FightGame
             {
                 new Player
                 {
-                    Name = "Alberto",
+                    Id = ++_lastId,
+                    Name = "Rubén",
                     Gender = Gender.Male,
                     Lives = DefaultLives,
                     Power = DefaultPower
                 },
                 new Player
                 {
-                    Name = "Mary",
+                    Id = ++_lastId,
+                    Name = "Raúl",
                     Gender = Gender.Female,
                     Lives = DefaultLives,
                     Power = DefaultPower
                 },
                 new Player
                 {
-                    Name = "Juan",
+                    Id = ++_lastId,
+                    Name = "Javi",
                     Gender = Gender.Male,
                     Lives = DefaultLives,
                     Power = DefaultPower
                 },
                 new Player
                 {
-                    Name = "Thor",
+                    Id = ++_lastId,
+                    Name = "Dios",
                     Gender = Gender.Male,
                     Lives = DefaultLives,
                     Power = DefaultPower
@@ -103,7 +109,7 @@ namespace FightGame
             }
           
         }
-
+        public void Ranking() { }
         private void Menu()
         {
             Console.WriteLine("\n\nElige una opción:\n");
@@ -143,7 +149,7 @@ namespace FightGame
 
             var player = new Player
             {
-                Id = Guid.NewGuid(),
+                Id = ++_lastId,
                 Gender = gender.Value,
                 Name = name,
                 Power = DefaultPower,
@@ -156,71 +162,96 @@ namespace FightGame
 
             player.Status();
 
-            Console.ReadKey(true);
-
-            Menu();
+            
         }
 
         public void Fight()
         {
-            // hay más de un jugador? no = error, si = seguimos
-            if (Players.Count < 2)
+            var currentPlayers = Players
+                .Where(x => x.Lives > 0)
+                .ToList();
+
+            // hay más de un jugador?
+            if (currentPlayers.Count < 2)
             {
-                Console.WriteLine("\nNo hay suficientes jugadores");
+                ConsoleHelper.WriteLine("\nNo hay suficientes jugadores", ConsoleColor.Red);
+                return;
             }
-            else
+            int indexPlayer1;
+            int indexPlayer2;
+            do
             {
-                // elegir un player aleatoriamente
-                var indexPlayer1 = _random.Next(0, Players.Count);
-                var player1 = Players[indexPlayer1];
+                indexPlayer1 = _random.Next(0, currentPlayers.Count);
+                indexPlayer2 = _random.Next(0, currentPlayers.Count); ;
 
-                // elegir el segundo player aleatoriamente pero que no se repita
-                int indexPlayer2 = 0;
+            } while (indexPlayer1 == indexPlayer2);
+            var player1 = currentPlayers[indexPlayer1];
+            var player2 = currentPlayers[indexPlayer2];
+            // elegir un player aleatoriamente
+            //var indexPlayer1 = _random.Next(0, currentPlayers.Count);
+            // var player1 = currentPlayers[indexPlayer1];
 
-                while (indexPlayer1 == indexPlayer2)
+            // elegir el segundo player aleatoriamente pero que no se repita
+            //int indexPlayer2 = _random.Next(0, currentPlayers.Count); ;
+            //while (indexPlayer1 == indexPlayer2)
+            //    indexPlayer2 = _random.Next(0, currentPlayers.Count);
+
+            //var player2 = currentPlayers[indexPlayer2];
+
+            // quitamos power al player 2 (el nivel de daño será aleatorio entre 1 y 5)
+            var damage = _random.Next(1, 5);
+            player2.Power -= damage;
+
+            ConsoleHelper.WriteLine($"==> {player1.Name} ha zurrado a {player2.Name}",
+                ConsoleColor.Blue);
+
+            if (player2.Power <= 0)
+            {
+                player2.Lives--;
+                player2.Power = player2.Lives > 0 ? DefaultPower : 0;
+
+                if (player2.Lives > 0)
                 {
-                    indexPlayer2 = _random.Next(0, Players.Count);
-                }
-                
-                var player2 = Players[indexPlayer2];
-                var damage = _random.Next(1, 5);
-
-                // quitamos power al player 2 (si llega a 0 o menor que 0, le quitamos una vida).
-                player2.Power -= damage;
-                Console.WriteLine($"{player1.Name} ha zurrado a {player2.Name}");
-                // ConsoleHelper.WriteLine($"{player1.Name} ha zurrado a {player2.Name}", ConsoleColor.Blue);
-
-                if (player2.Power <= 0)
-                {
-                    player2.Lives --;
-                    player1.Gems ++;
-
-                    if (player2.Lives > 0)
-                        Console.WriteLine($"{player2.Name} ha perdido una vida");
-                    else
-                        Console.WriteLine($"{player2.Name} ha muerto");
-                }
-
-                Console.WriteLine("\nPulsa intro para luchar de nuevo. " +
-                    "Cualquier otra tecla para ver menú");
-
-                var key = Console.ReadKey();
-
-                if (key.Key == ConsoleKey.Enter)
-                {
-                    Fight();
+                    ConsoleHelper.WriteLine($"{player2.Name} ha perdido una vida",
+                        ConsoleColor.Yellow);
                 }
                 else
                 {
-                    Menu();
+                    player2.Gems = 0;
+                    ConsoleHelper.WriteLine($"{player2.Name} ha muerto",
+                        ConsoleColor.Red);
+                }
+
+                player1.Gems++;
+
+                ConsoleHelper.WriteLine($"{player1.Name} ha ganado una gema. " +
+                    $"Ahora tiene {player1.Gems} en total.",
+                    ConsoleColor.Green);
+
+                // cada 3 gemas le damos una vida
+                if (player1.Gems == 3)
+                {
+                    player1.Lives++;
+                    player1.Gems = 0;
+
+                    ConsoleHelper.WriteLine($"{player1.Name} ha ganado una VIDA!!",
+                        ConsoleColor.Magenta);
+                }
+
+                // comprobar si hay ganador
+                if (Players.Count(x => x.Lives > 0) == 1)
+                {
+                    Console.WriteLine("\n\n+============================================+");
+                    Console.WriteLine("+============================================+");
+                    Console.WriteLine("+============================================+");
+                    ConsoleHelper.WriteLine($"      {player1.Name} HA GANADO", ConsoleColor.Cyan);
+                    Console.WriteLine("+============================================+");
+                    Console.WriteLine("+============================================+");
+                    Console.WriteLine("+============================================+");
                 }
             }
         }
 
-        public void Ranking()
-        {
-
-        }
 
         public void Status()
         {
@@ -230,18 +261,19 @@ namespace FightGame
             }
             else
             {
-                Console.WriteLine($"\nNombre\t\tVidas\tPoder\tGemas\tSexo");
-                Console.WriteLine($"------------------------------------------------");
+                Console.WriteLine($"\nNombre\t\t\tId\tVidas\tPoder\tGemas\tSexo");
+                Console.WriteLine($"--------------------------------------------------------");
 
-                foreach (var player in Players)
+                var ordered = Players
+                    .OrderByDescending(x => x.Lives)
+                    .ThenByDescending(x => x.Power)
+                    .ThenByDescending(x => x.Gems);
+
+                foreach (var player in ordered)
                 {
                     player.Status();
                 }
             }
-            
-            Console.ReadKey(true);
-
-            Menu();
         }
     }
 }

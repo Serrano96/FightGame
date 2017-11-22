@@ -10,7 +10,7 @@ namespace FightGame
 
     public class Player
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public int Lives { get; set; }
         public int Power { get; set; }
@@ -29,12 +29,10 @@ namespace FightGame
                 ? "Hombre"
                 : "Mujer";
 
-            Console.WriteLine($"{Name}\t\t{Lives}\t{Power}\t{Gems}\t{genderDisplay}");
+            ConsoleHelper.WriteLine($"{Name.PadRight(15)}\t\t{Id}\t{Lives}\t{Power}\t{Gems}\t{genderDisplay}",
+                Lives > 0 ? ConsoleColor.White : ConsoleColor.Red);
         }
 
-        public void Train()
-        {
 
-        }
     }
 }
