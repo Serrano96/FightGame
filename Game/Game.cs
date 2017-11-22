@@ -13,7 +13,7 @@ namespace Game
 
         public Game()
         {
-            //comentario
+            
             Players = new List<Player>
             {
                 new Player
