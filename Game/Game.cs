@@ -68,7 +68,6 @@ namespace Game
         {
             Console.WriteLine("\nElige una opcion:");
             Console.WriteLine("###################\n");
-
             Console.WriteLine("1. Añadir jugador");
             Console.WriteLine("2. Status");
             Console.WriteLine("3. Luchar");
@@ -209,7 +208,7 @@ namespace Game
                 }
                 else
                 {
-                    //holaaaaaaaaaaa
+                    
                     Menu();
                     Console.Clear();
                 }
