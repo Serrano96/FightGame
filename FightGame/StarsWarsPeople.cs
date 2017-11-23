@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,8 +11,10 @@ namespace FightGame
     }
     public class Person
     {
-        public string name { get; set; }
-        public string gender { get; set; }
+        [JsonProperty("name")]
+        public string PlayerName { get; set; }
+        [JsonProperty("gender")]
+        public string PlayerGender { get; set; }
 
     }
 }
