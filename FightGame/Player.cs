@@ -29,7 +29,7 @@ namespace FightGame
                 ? "Hombre"
                 : "Mujer";
 
-            ConsoleHelper.WriteLine($"{Name.PadRight(15)}\t\t{Id}\t{Lives}\t{Power}\t{Gems}\t{genderDisplay}",
+            ConsoleHelper.WriteLine($"{Name.PadRight(25)}\t\t\t{Id}\t{Lives}\t{Power}\t{Gems}\t{genderDisplay}",
                 Lives > 0 ? ConsoleColor.White : ConsoleColor.Red);
         }
 
