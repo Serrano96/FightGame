@@ -11,6 +11,7 @@ namespace FightGame
     }
     public class Person
     {
+        //nada
         [JsonProperty("name")]
         public string PlayerName { get; set; }
         [JsonProperty("gender")]
