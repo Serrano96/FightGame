@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FightGame", "FightGame\FightGame.csproj", "{174CC6D2-6E36-40E6-912E-102C7411A43C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FightGame", "FightGame\FightGame.csproj", "{174CC6D2-6E36-40E6-912E-102C7411A43C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FightGameApi", "FightGameApi\FightGameApi.csproj", "{EF0A16FC-D397-46ED-9149-0555FA2F9BE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FightGame.Model", "FightGame.Model\FightGame.Model.csproj", "{AF21A415-DCE7-4009-BD7A-A0FC6E66440A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FightServices", "FightServices\FightServices.csproj", "{33502EED-B6FC-48FA-8B47-62EBAC917642}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{174CC6D2-6E36-40E6-912E-102C7411A43C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{174CC6D2-6E36-40E6-912E-102C7411A43C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{174CC6D2-6E36-40E6-912E-102C7411A43C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF0A16FC-D397-46ED-9149-0555FA2F9BE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF0A16FC-D397-46ED-9149-0555FA2F9BE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF0A16FC-D397-46ED-9149-0555FA2F9BE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF0A16FC-D397-46ED-9149-0555FA2F9BE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF21A415-DCE7-4009-BD7A-A0FC6E66440A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF21A415-DCE7-4009-BD7A-A0FC6E66440A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF21A415-DCE7-4009-BD7A-A0FC6E66440A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF21A415-DCE7-4009-BD7A-A0FC6E66440A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33502EED-B6FC-48FA-8B47-62EBAC917642}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33502EED-B6FC-48FA-8B47-62EBAC917642}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33502EED-B6FC-48FA-8B47-62EBAC917642}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33502EED-B6FC-48FA-8B47-62EBAC917642}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
