@@ -1,13 +1,5 @@
-﻿using System;
-
-namespace FightGame
+﻿namespace FightGame
 {
-    public enum Gender
-    {
-        Male,
-        Female
-    }
-
     public class Player
     {
         public int Id { get; set; }
@@ -17,21 +9,13 @@ namespace FightGame
         public int Gems { get; set; }
         public Gender Gender { get; set; }
 
-        public Player()
-        {
-            // comentario
-            // otro cambio
-        }
-
         public string Status()
         {
             var genderDisplay = (Gender == Gender.Male)
                 ? "Hombre"
                 : "Mujer";
 
-            return $"{Name.PadRight(25)}\t\t\t{Id}\t{Lives}\t{Power}\t{Gems}\t{genderDisplay}";
+            return $"{Name.PadRight(20)}\t\t{Id}\t{Lives}\t{Power}\t{Gems}\t{genderDisplay}";
         }
-
-
     }
 }

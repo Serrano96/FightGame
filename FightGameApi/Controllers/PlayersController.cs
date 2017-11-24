@@ -1,41 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using FightGame;
+using System;
 
 namespace FightGameApi.Controllers
 {
     [Route("api/[controller]")]
     public class PlayersController : Controller
     {
-        // GET api/values
+        private IPlayerService _playerService;
+
+        public PlayersController(IPlayerService playerService)
+        {
+            _playerService = playerService;
+        }
+
+        // GET api/players
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Player> Get()
         {
-            return new string[] { "pepito", "fulanito","menganito" };
+            return _playerService.GetPlayers();
         }
 
-        // GET api/values/5
+        // GET api/players/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            try
+            {
+                var player = _playerService.GetPlayerById(id);
+                return new ObjectResult(player);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return NotFound();
+            }
         }
 
-        // POST api/values
+        // POST api/players
         [HttpPost]
         public void Post([FromBody]string value)
         {
         }
 
-        // PUT api/values/5
+        // PUT api/players/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
         }
 
-        // DELETE api/values/5
+        // DELETE api/players/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

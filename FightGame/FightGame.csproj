@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FightGame.Model\FightGame.Model.csproj" />
-    <ProjectReference Include="..\FightServices\FightServices.csproj" />
+    <ProjectReference Include="..\FightGame.Services\FightGame.Services.csproj" />
   </ItemGroup>
 
 </Project>
