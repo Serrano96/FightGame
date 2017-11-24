@@ -18,9 +18,10 @@ namespace FightGameApi.Controllers
 
         // GET api/players
         [HttpGet]
-        public IEnumerable<Player> Get()
-        {
-            return _playerService.GetPlayers();
+        public IActionResult Get()
+        {     
+            var result = _playerService.GetPlayers();
+            return new ObjectResult(result);   
         }
 
         // GET api/players/5
@@ -35,26 +36,51 @@ namespace FightGameApi.Controllers
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return NotFound();
+                return NotFound(new { Error = $"El jugador con id {id} no existe" });
             }
         }
 
         // POST api/players
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody]Player player)
         {
+            _playerService.AddPlayer(player);
+            return new CreatedResult($"api/players/{player.Id}",player);
         }
 
         // PUT api/players/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(int id, [FromBody]Player player)
         {
+            try
+            {
+                if (id != player.Id)
+                {
+                    return BadRequest();
+                }
+                _playerService.UpdatePlayer(player);
+                return NoContent();
+            }
+            catch(Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         // DELETE api/players/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            try
+            {
+                _playerService.Delete(id);
+                return new OkResult();
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
+          
         }
     }
 }
